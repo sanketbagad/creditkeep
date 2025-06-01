@@ -25,6 +25,7 @@ import {
   Filter,
   Phone,
   MapPin,
+  Edit,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -230,6 +231,12 @@ export default function ShopDetailPage() {
                 )}
               </div>
             </div>
+            <Link href={`/shops/${shopId}/edit`} className="flex-shrink-0">
+              <Button variant="outline" size="sm" className="flex items-center gap-1">
+                <Edit className="h-3 w-3" />
+                Edit
+              </Button>
+            </Link>
           </div>
 
           {/* Balance Overview */}

@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
 
   if (!token) {
     // If no token and trying to access protected route, redirect to login
-    if (!isPublicPath) {
+    if (!isPublicPath && !pathname.startsWith("/transactions/add")) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
     return NextResponse.next()
