@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  passwordHash String        @map("password_hash")
+  name         String
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  
+  shops        Shop[]
+  transactions Transaction[]
+
+  @@map("users")
+}
+
+model Shop {
+  id          Int           @id @default(autoincrement())
+  userId      Int           @map("user_id")
+  name        String
+  description String?
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+  
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("shops")
+}
+
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @map("user_id")
+  shopId          Int      @map("shop_id")
+  amount          Decimal  @db.Decimal(10, 2)
+  type            TransactionType
+  description     String?
+  transactionDate DateTime @default(now()) @map("transaction_date") @db.Date
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}
+
+enum TransactionType {
+  borrow
+  payment
+}
