@@ -14,7 +14,7 @@ export async function generateToken(user: User): Promise<string> {
   return await new SignJWT({ userId: user.id, email: user.email })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime("180d") // Changed from "7d" to "180d" (6 months)
     .sign(JWT_SECRET)
 }
 

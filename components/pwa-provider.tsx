@@ -11,6 +11,7 @@ interface PWAContextType {
   canInstall: boolean
   install: () => Promise<boolean>
   offlineStorage: OfflineStorage
+  refreshSession: () => Promise<void>
 }
 
 const PWAContext = createContext<PWAContextType | null>(null)
@@ -31,6 +32,7 @@ export function PWAProvider({ children }: PWAProviderProps) {
   const [isOnline, setIsOnline] = useState(true)
   const [canInstall, setCanInstall] = useState(false)
   const [showInstallPrompt, setShowInstallPrompt] = useState(false)
+  const [showOnlineIndicator, setShowOnlineIndicator] = useState(false)
   const [pwaManager] = useState(() => new PWAManager())
   const [offlineStorage] = useState(() => new OfflineStorage())
 
@@ -42,7 +44,16 @@ export function PWAProvider({ children }: PWAProviderProps) {
     setIsOnline(navigator.onLine)
 
     // Listen for online/offline events
-    pwaManager.onOnlineStatusChange(setIsOnline)
+    pwaManager.onOnlineStatusChange((online) => {
+      setIsOnline(online)
+      if (online) {
+        setShowOnlineIndicator(true)
+        // Hide online indicator after 3 seconds
+        setTimeout(() => setShowOnlineIndicator(false), 3000)
+        // Refresh session when coming back online
+        refreshSession()
+      }
+    })
 
     // Check if app can be installed
     const checkInstallability = () => {
@@ -74,11 +85,20 @@ export function PWAProvider({ children }: PWAProviderProps) {
     return success
   }
 
+  const refreshSession = async () => {
+    try {
+      await fetch("/api/auth/me", { credentials: "include" })
+    } catch (error) {
+      console.error("Failed to refresh session:", error)
+    }
+  }
+
   const contextValue: PWAContextType = {
     isOnline,
     canInstall,
     install: handleInstall,
     offlineStorage,
+    refreshSession,
   }
 
   return (
@@ -96,6 +116,7 @@ export function PWAProvider({ children }: PWAProviderProps) {
       )}
 
       {/* Online Indicator (brief) */}
+     
 
       {/* Install Prompt */}
       {showInstallPrompt && canInstall && (

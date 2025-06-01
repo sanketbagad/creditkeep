@@ -6,12 +6,15 @@ export async function GET(request: NextRequest) {
   try {
     const token = request.cookies.get("auth-token")?.value
     if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json({ error: "Unauthorized", authenticated: false }, { status: 401 })
     }
 
     const decoded = await verifyToken(token)
     if (!decoded) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      // Clear invalid cookie
+      const response = NextResponse.json({ error: "Invalid token", authenticated: false }, { status: 401 })
+      response.cookies.delete("auth-token")
+      return response
     }
 
     // Get user info from database using Prisma
@@ -21,16 +24,39 @@ export async function GET(request: NextRequest) {
         id: true,
         name: true,
         email: true,
+        mobile: true,
+        createdAt: true,
+        _count: {
+          select: {
+            shops: true,
+            transactions: true,
+          },
+        },
       },
     })
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
+      const response = NextResponse.json({ error: "User not found", authenticated: false }, { status: 404 })
+      response.cookies.delete("auth-token")
+      return response
     }
 
-    return NextResponse.json({ user })
+    return NextResponse.json({
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        createdAt: user.createdAt,
+        stats: {
+          totalShops: user._count.shops,
+          totalTransactions: user._count.transactions,
+        },
+      },
+      authenticated: true,
+    })
   } catch (error) {
     console.error("Error fetching user:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: "Internal server error", authenticated: false }, { status: 500 })
   }
 }

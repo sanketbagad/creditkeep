@@ -13,8 +13,8 @@ import { AlertCircle, Eye, EyeOff, Sparkles, Loader2, CheckCircle2 } from "lucid
 import { Navbar } from "@/components/navbar"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("demo@example.com")
-  const [password, setPassword] = useState("demo123")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")

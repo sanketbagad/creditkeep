@@ -9,22 +9,56 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { AlertCircle, Eye, EyeOff, Sparkles } from "lucide-react"
+import { AlertCircle, Eye, EyeOff, Sparkles, Phone } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 
 export default function SignupPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [mobile, setMobile] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
 
+  const formatMobileNumber = (value: string) => {
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, "")
+
+    // Limit to 10 digits
+    const limitedDigits = digits.slice(0, 10)
+
+    // Format as XXX-XXX-XXXX
+    if (limitedDigits.length >= 6) {
+      return `${limitedDigits.slice(0, 3)}-${limitedDigits.slice(3, 6)}-${limitedDigits.slice(6)}`
+    } else if (limitedDigits.length >= 3) {
+      return `${limitedDigits.slice(0, 3)}-${limitedDigits.slice(3)}`
+    }
+    return limitedDigits
+  }
+
+  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatMobileNumber(e.target.value)
+    setMobile(formatted)
+  }
+
+  const validateMobile = (mobile: string) => {
+    const digits = mobile.replace(/\D/g, "")
+    return digits.length === 10
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
+
+    // Validate mobile number
+    if (mobile && !validateMobile(mobile)) {
+      setError("Please enter a valid 10-digit mobile number")
+      setLoading(false)
+      return
+    }
 
     try {
       const response = await fetch("/api/auth/signup", {
@@ -32,7 +66,12 @@ export default function SignupPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          mobile: mobile.replace(/\D/g, ""), // Send only digits
+        }),
       })
 
       const data = await response.json()
@@ -111,6 +150,27 @@ export default function SignupPage() {
                     className="h-12 rounded-xl border-gray-200 focus:border-blue-500 focus:ring-blue-500"
                     required
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="mobile" className="text-gray-700 font-medium">
+                    Mobile Number <span className="text-gray-500 text-sm">(Optional)</span>
+                  </Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <Input
+                      id="mobile"
+                      type="tel"
+                      placeholder="123-456-7890"
+                      value={mobile}
+                      onChange={handleMobileChange}
+                      className="h-12 rounded-xl border-gray-200 focus:border-blue-500 focus:ring-blue-500 pl-10"
+                      maxLength={12} // XXX-XXX-XXXX format
+                    />
+                  </div>
+                  {mobile && !validateMobile(mobile) && (
+                    <p className="text-xs text-red-500">Please enter a valid 10-digit mobile number</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">

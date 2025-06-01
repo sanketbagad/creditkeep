@@ -39,6 +39,8 @@ export async function GET(request: NextRequest) {
         id: shop.id,
         name: shop.name,
         description: shop.description,
+        mobile: shop.mobile,
+        address: shop.address,
         created_at: shop.createdAt,
         total_balance: totalBalance,
       }
@@ -63,17 +65,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 })
     }
 
-    const { name, description } = await request.json()
+    const { name, description, mobile, address } = await request.json()
 
     if (!name) {
       return NextResponse.json({ error: "Shop name is required" }, { status: 400 })
+    }
+
+    // Validate mobile number if provided
+    if (mobile && !/^\d{10}$/.test(mobile)) {
+      return NextResponse.json({ error: "Mobile number must be exactly 10 digits" }, { status: 400 })
     }
 
     const shop = await prisma.shop.create({
       data: {
         userId: decoded.userId,
         name,
-        description: description || "",
+        description: description || null,
+        mobile: mobile || null,
+        address: address || null,
       },
     })
 

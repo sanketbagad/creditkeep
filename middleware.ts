@@ -6,7 +6,17 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Public paths that don't require authentication
-  if (pathname.startsWith("/login") || pathname.startsWith("/signup") || pathname === "/") {
+  const publicPaths = ["/", "/login", "/signup", "/api/health"]
+  const isPublicPath = publicPaths.includes(pathname)
+
+  // API routes that don't require auth
+  if (
+    pathname.startsWith("/api/") &&
+    !pathname.startsWith("/api/auth/me") &&
+    !pathname.startsWith("/api/shops") &&
+    !pathname.startsWith("/api/transactions") &&
+    !pathname.startsWith("/api/analytics")
+  ) {
     return NextResponse.next()
   }
 
@@ -14,17 +24,30 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("auth-token")?.value
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url))
+    // If no token and trying to access protected route, redirect to login
+    if (!isPublicPath) {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+    return NextResponse.next()
   }
 
+  // Verify token
   const decoded = await verifyToken(token)
   if (!decoded) {
-    return NextResponse.redirect(new URL("/login", request.url))
+    // Invalid token, clear cookie and redirect to login
+    const response = NextResponse.redirect(new URL("/login", request.url))
+    response.cookies.delete("auth-token")
+    return response
+  }
+
+  // If authenticated and trying to access public auth pages, redirect to dashboard
+  if (isPublicPath && (pathname === "/login" || pathname === "/signup" || pathname === "/")) {
+    return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/shops/:path*", "/transactions/:path*", "/analytics/:path*", "/profile/:path*"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|manifest.json|icons|sw.js|screenshots).*)"],
 }

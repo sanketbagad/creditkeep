@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { PWAProvider } from "@/components/pwa-provider"
+import { AuthRedirect } from "@/components/auth-redirect"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -54,7 +55,6 @@ export const metadata: Metadata = {
       { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
     ],
   },
-    generator: 'v0.dev'
 }
 
 export const viewport: Viewport = {
@@ -83,7 +83,9 @@ export default function RootLayout({
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
       <body className={inter.className}>
-        <PWAProvider>{children}</PWAProvider>
+        <PWAProvider>
+          <AuthRedirect>{children}</AuthRedirect>
+        </PWAProvider>
       </body>
     </html>
   )
