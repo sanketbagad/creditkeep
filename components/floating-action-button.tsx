@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Plus, X, Receipt, TrendingUp, TrendingDown } from "lucide-react"
+import { Plus, X, Receipt, TrendingUp, TrendingDown, HandCoins } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function FloatingActionButton() {
@@ -18,6 +18,15 @@ export function FloatingActionButton() {
           isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
         )}
       >
+        <Link href="/lending">
+          <Button
+            size="sm"
+            className="bg-purple-500 hover:bg-purple-600 text-white shadow-lg rounded-full h-12 w-12 p-0"
+            onClick={() => setIsOpen(false)}
+          >
+            <HandCoins className="h-5 w-5" />
+          </Button>
+        </Link>
         <Link href="/transactions/add?type=payment">
           <Button
             size="sm"

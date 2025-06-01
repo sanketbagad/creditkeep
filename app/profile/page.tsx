@@ -191,7 +191,7 @@ export default function ProfilePage() {
                 <p>
                   <strong>CreditKeep</strong>
                 </p>
-                <p>Version 1.0.0</p>
+                <p>Version 1.1.5</p>
                 <p>Keep track of your daily borrowings and payments</p>
               </div>
             </CardContent>

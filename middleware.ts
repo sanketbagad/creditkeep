@@ -15,7 +15,9 @@ export async function middleware(request: NextRequest) {
     !pathname.startsWith("/api/auth/me") &&
     !pathname.startsWith("/api/shops") &&
     !pathname.startsWith("/api/transactions") &&
-    !pathname.startsWith("/api/analytics")
+    !pathname.startsWith("/api/analytics") &&
+    !pathname.startsWith("/api/lend-transactions") &&
+    !pathname.startsWith("/api/borrower-details")
   ) {
     return NextResponse.next()
   }
@@ -25,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   if (!token) {
     // If no token and trying to access protected route, redirect to login
-    if (!isPublicPath && !pathname.startsWith("/transactions/add")) {
+    if (!isPublicPath && !pathname.startsWith("/borrower-lookup")) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
     return NextResponse.next()

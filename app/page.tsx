@@ -1,7 +1,18 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Receipt, Store, BarChart3, Shield, ArrowRight, Sparkles, TrendingUp, Users } from "lucide-react"
+import {
+  Receipt,
+  Store,
+  BarChart3,
+  Shield,
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+  Users,
+  HandCoins,
+  Search,
+} from "lucide-react"
 import { Navbar } from "@/components/navbar"
 
 export default function HomePage() {
@@ -34,11 +45,11 @@ export default function HomePage() {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent leading-tight">
               Smart Borrowing
               <br />
-              <span className="text-3xl">Made Simple</span>
+              <span className="text-3xl">& Lending</span>
             </h1>
             <p className="text-gray-600 text-lg leading-relaxed px-2">
-              Track your daily borrowings, manage payments, and gain insights into your spending habits with our
-              beautiful, intuitive app.
+              Track borrowings, manage lending, and gain insights into your financial relationships with our beautiful,
+              intuitive app.
             </p>
           </div>
 
@@ -76,6 +87,24 @@ export default function HomePage() {
               >
                 Sign In
               </Button>
+            </Link>
+          </div>
+
+          {/* Borrower Lookup CTA */}
+          <div className="mb-8">
+            <Link href="/borrower-lookup" className="block">
+              <Card className="border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-yellow-50 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center">
+                    <Search className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <h3 className="font-semibold text-gray-900">Check Your Borrowings</h3>
+                    <p className="text-sm text-gray-600">Enter your mobile to see money you've borrowed</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-gray-400" />
+                </CardContent>
+              </Card>
             </Link>
           </div>
 
@@ -121,6 +150,18 @@ export default function HomePage() {
             <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-purple-50 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl delay-200">
               <CardContent className="p-6 flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <HandCoins className="h-6 w-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-1">Personal Lending</h3>
+                  <p className="text-sm text-gray-600">Lend money to friends and track repayments easily</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-indigo-50 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl delay-300">
+              <CardContent className="p-6 flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
@@ -130,7 +171,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-orange-50 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl delay-300">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-orange-50 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl delay-400">
               <CardContent className="p-6 flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Shield className="h-6 w-6 text-white" />
@@ -158,7 +199,7 @@ export default function HomePage() {
         {/* Footer */}
         <div className="relative z-10 p-6 text-center text-sm text-gray-500 space-y-2">
           <p className="font-medium">Simple. Secure. Reliable.</p>
-          <p className="text-xs">© 2024 CreditKeep. All rights reserved.</p>
+          <p className="text-xs">© 2024 Botbyte AI. All rights reserved.</p>
         </div>
       </div>
     </div>

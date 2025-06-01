@@ -21,6 +21,7 @@ model User {
   
   shops        Shop[]
   transactions Transaction[]
+  lentTransactions LendTransaction[] @relation("Lender")
 
   @@map("users")
 }
@@ -57,7 +58,28 @@ model Transaction {
   @@map("transactions")
 }
 
+model LendTransaction {
+  id              Int      @id @default(autoincrement())
+  lenderId        Int      @map("lender_id")
+  borrowerName    String   @map("borrower_name")
+  borrowerMobile  String   @map("borrower_mobile")
+  amount          Decimal  @db.Decimal(10, 2)
+  type            LendTransactionType
+  description     String?
+  transactionDate DateTime @default(now()) @map("transaction_date") @db.Date
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  lender User @relation("Lender", fields: [lenderId], references: [id], onDelete: Cascade)
+
+  @@map("lend_transactions")
+}
+
 enum TransactionType {
   borrow
   payment
+}
+
+enum LendTransactionType {
+  lend
+  repayment
 }
