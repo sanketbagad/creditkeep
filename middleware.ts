@@ -17,7 +17,10 @@ export async function middleware(request: NextRequest) {
     !pathname.startsWith("/api/transactions") &&
     !pathname.startsWith("/api/analytics") &&
     !pathname.startsWith("/api/lend-transactions") &&
-    !pathname.startsWith("/api/borrower-details")
+    !pathname.startsWith("/api/borrower-details") &&
+    !pathname.startsWith("/api/my-borrowers") &&
+    !pathname.startsWith("/api/my-borrowing") &&
+    !pathname.startsWith("/api/send-reminder")
   ) {
     return NextResponse.next()
   }
