@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     }
 
     // Generate a reset token
-    const resetToken = crypto.randomBytes(32).toString("hex")
+    const resetToken: any = crypto.randomBytes(32).toString("hex")
     const resetTokenExpiry = new Date(Date.now() + 3600000) // 1 hour from now
 
     // Save the reset token to the user
