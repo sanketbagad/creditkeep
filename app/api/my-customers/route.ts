@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
     // 2. Get all shops owned by current user
     const userShops = await prisma.shop.findMany({
-      where: { userId: decoded.userId },
+      where: { mobile: currentUser.mobile },
       select: { id: true, name: true },
     })
 
