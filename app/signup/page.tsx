@@ -53,7 +53,7 @@ export default function SignupPage() {
     setLoading(true)
     setError("")
 
-    // Validate mobile number
+    // Validate mobile number if provided
     if (mobile && !validateMobile(mobile)) {
       setError("Please enter a valid 10-digit mobile number")
       setLoading(false)
@@ -61,7 +61,7 @@ export default function SignupPage() {
     }
 
     try {
-      const response = await fetch("/api/auth/signup", {
+      const response = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,9 +77,10 @@ export default function SignupPage() {
       const data = await response.json()
 
       if (response.ok) {
-        router.push("/dashboard")
+        // Redirect to OTP verification page
+        router.push(`/verify-otp?email=${encodeURIComponent(email)}`)
       } else {
-        setError(data.error || "Signup failed")
+        setError(data.error || "Failed to send verification code")
       }
     } catch (error) {
       setError("Something went wrong. Please try again.")
@@ -209,7 +210,7 @@ export default function SignupPage() {
                   className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300"
                   disabled={loading}
                 >
-                  {loading ? "Creating account..." : "Create account"}
+                  {loading ? "Sending verification code..." : "Send verification code"}
                 </Button>
               </form>
 

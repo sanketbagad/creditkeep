@@ -6,7 +6,15 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Public paths that don't require authentication
-  const publicPaths = ["/", "/login", "/signup", "/api/health"]
+  const publicPaths = [
+    "/",
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+    "/verify-otp",
+    "/borrower-lookup",
+  ]
   const isPublicPath = publicPaths.includes(pathname)
 
   // API routes that don't require auth
@@ -20,7 +28,10 @@ export async function middleware(request: NextRequest) {
     !pathname.startsWith("/api/borrower-details") &&
     !pathname.startsWith("/api/my-borrowers") &&
     !pathname.startsWith("/api/my-borrowing") &&
-    !pathname.startsWith("/api/send-reminder")
+    !pathname.startsWith("/api/send-reminder") &&
+    !pathname.startsWith("/api/shop-borrower-lookup") &&
+    !pathname.startsWith("/api/mark-payment") &&
+    !pathname.startsWith("/api/my-customers")
   ) {
     return NextResponse.next()
   }
@@ -30,7 +41,7 @@ export async function middleware(request: NextRequest) {
 
   if (!token) {
     // If no token and trying to access protected route, redirect to login
-    if (!isPublicPath && !pathname.startsWith("/borrower-lookup")) {
+    if (!isPublicPath) {
       return NextResponse.redirect(new URL("/login", request.url))
     }
     return NextResponse.next()
