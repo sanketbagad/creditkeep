@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import bcrypt from "bcryptjs"
-import prisma from "@/lib/prisma"
+import {prisma} from "@/lib/prisma"
 import { getPasswordResetSuccessEmailHtml } from "@/lib/email-templates"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
