@@ -16,30 +16,18 @@ model User {
   passwordHash String        @map("password_hash")
   name         String
   mobile       String?       // Added mobile number field
+  resetToken   String?       @map("reset_token")
+  resetTokenExpiry DateTime? @map("reset_token_expiry")
+  emailVerified Boolean      @default(false) @map("email_verified")
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
   
   shops        Shop[]
   transactions Transaction[]
   lentTransactions LendTransaction[] @relation("Lender")
-  resetToken    String?   // Added for password reset
-  resetTokenExpiry DateTime? // Added for password reset expiry
-  emailVerified Boolean      @default(false) @map("email_verified")
+
   @@map("users")
 }
-
-model EmailVerification {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  otp       String
-  expiresAt DateTime
-  verified  Boolean  @default(false)
-  userData  Json     // Store user registration data temporarily
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("email_verifications")
-}
-
 
 model Shop {
   id          Int           @id @default(autoincrement())
@@ -87,6 +75,18 @@ model LendTransaction {
   lender User @relation("Lender", fields: [lenderId], references: [id], onDelete: Cascade)
 
   @@map("lend_transactions")
+}
+
+model EmailVerification {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  otp       String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  userData  Json     // Store user registration data temporarily
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("email_verifications")
 }
 
 enum TransactionType {

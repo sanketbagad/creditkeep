@@ -16,6 +16,8 @@ export async function POST(request: NextRequest) {
       where: { email },
     })
 
+    console.log("Verification record:", verification)
+
     if (!verification) {
       return NextResponse.json({ error: "No verification request found for this email" }, { status: 400 })
     }
@@ -53,7 +55,11 @@ export async function POST(request: NextRequest) {
     })
 
     // Generate JWT token
-    const token = await generateToken({ userId: user.id, email: user.email })
+    const token = await generateToken({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    })
 
     // Create response with token in cookie
     const response = NextResponse.json({
