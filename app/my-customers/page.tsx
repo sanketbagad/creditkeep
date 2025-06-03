@@ -63,7 +63,7 @@ export default function MyCustomersPage() {
     return mobile
   }
 
-  const filteredBorrowers = borrowers.filter(
+  const filteredBorrowers = borrowers?.filter(
     (b) =>
       b.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       b.mobile.includes(searchTerm)
@@ -117,7 +117,7 @@ export default function MyCustomersPage() {
           </div>
 
           <div className="space-y-4">
-            {filteredBorrowers.length === 0 ? (
+            {filteredBorrowers?.length === 0 ? (
               <Card>
                 <CardContent className="p-8 text-center">
                   <Users className="h-12 w-12 mx-auto text-gray-400 mb-4" />
@@ -132,7 +132,7 @@ export default function MyCustomersPage() {
                 </CardContent>
               </Card>
             ) : (
-              filteredBorrowers.map((b, idx) => (
+              filteredBorrowers?.map((b, idx) => (
                 <Card key={b.mobile + idx} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-4 flex items-center justify-between">
                     <div>
