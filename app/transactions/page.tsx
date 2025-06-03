@@ -22,6 +22,7 @@ import {
   TrendingUp,
   TrendingDown,
   DollarSign,
+  ChevronRight,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -258,25 +259,31 @@ export default function TransactionsPage() {
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-3 gap-3">
-            <Card>
+            <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200 shadow-sm">
               <CardContent className="p-3 text-center">
-                <TrendingUp className="h-4 w-4 mx-auto text-red-600 mb-1" />
-                <p className="text-xs text-gray-600">Borrowed</p>
-                <p className="text-sm font-bold text-red-600">₹{totalBorrowed.toFixed(2)}</p>
+                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <TrendingUp className="h-4 w-4 text-white" />
+                </div>
+                <p className="text-xs text-red-700 font-medium">Borrowed</p>
+                <p className="text-lg font-bold text-red-800">₹{totalBorrowed.toFixed(2)}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-sm">
               <CardContent className="p-3 text-center">
-                <TrendingDown className="h-4 w-4 mx-auto text-green-600 mb-1" />
-                <p className="text-xs text-gray-600">Paid</p>
-                <p className="text-sm font-bold text-green-600">₹{totalPaid.toFixed(2)}</p>
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <TrendingDown className="h-4 w-4 text-white" />
+                </div>
+                <p className="text-xs text-green-700 font-medium">Paid</p>
+                <p className="text-lg font-bold text-green-800">₹{totalPaid.toFixed(2)}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-sm">
               <CardContent className="p-3 text-center">
-                <DollarSign className="h-4 w-4 mx-auto text-blue-600 mb-1" />
-                <p className="text-xs text-gray-600">Net</p>
-                <p className={`text-sm font-bold ${netBalance > 0 ? "text-red-600" : "text-green-600"}`}>
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <DollarSign className="h-4 w-4 text-white" />
+                </div>
+                <p className="text-xs text-blue-700 font-medium">Net</p>
+                <p className={`text-lg font-bold ${netBalance > 0 ? "text-red-800" : "text-green-800"}`}>
                   ₹{Math.abs(netBalance).toFixed(2)}
                 </p>
               </CardContent>
@@ -284,10 +291,10 @@ export default function TransactionsPage() {
           </div>
 
           {/* Search and Filters */}
-          <Card>
+          <Card className="shadow-sm border-gray-200">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Filter className="h-5 w-5" />
+                <Filter className="h-5 w-5 text-blue-600" />
                 Filters
               </CardTitle>
             </CardHeader>
@@ -299,16 +306,16 @@ export default function TransactionsPage() {
                   placeholder="Search transactions..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
 
               {/* Filter Row 1 */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-gray-600 mb-1 block">Shop</label>
+                  <label className="text-xs text-gray-600 mb-1 block font-medium">Shop</label>
                   <Select value={selectedShop} onValueChange={setSelectedShop}>
-                    <SelectTrigger className="h-9">
+                    <SelectTrigger className="h-9 border-gray-300">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -323,9 +330,9 @@ export default function TransactionsPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-600 mb-1 block">Type</label>
+                  <label className="text-xs text-gray-600 mb-1 block font-medium">Type</label>
                   <Select value={selectedType} onValueChange={setSelectedType}>
-                    <SelectTrigger className="h-9">
+                    <SelectTrigger className="h-9 border-gray-300">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -340,9 +347,9 @@ export default function TransactionsPage() {
               {/* Filter Row 2 */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-gray-600 mb-1 block">Period</label>
+                  <label className="text-xs text-gray-600 mb-1 block font-medium">Period</label>
                   <Select value={dateRange} onValueChange={setDateRange}>
-                    <SelectTrigger className="h-9">
+                    <SelectTrigger className="h-9 border-gray-300">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -357,10 +364,10 @@ export default function TransactionsPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-600 mb-1 block">Sort By</label>
+                  <label className="text-xs text-gray-600 mb-1 block font-medium">Sort By</label>
                   <div className="flex gap-1">
                     <Select value={sortBy} onValueChange={(value: "date" | "amount" | "shop") => setSortBy(value)}>
-                      <SelectTrigger className="h-9 flex-1">
+                      <SelectTrigger className="h-9 flex-1 border-gray-300">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -369,7 +376,7 @@ export default function TransactionsPage() {
                         <SelectItem value="shop">Shop</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Button variant="outline" size="sm" onClick={toggleSortOrder} className="h-9 px-2">
+                    <Button variant="outline" size="sm" onClick={toggleSortOrder} className="h-9 px-2 border-gray-300">
                       <ArrowUpDown className="h-3 w-3" />
                     </Button>
                   </div>
@@ -378,7 +385,12 @@ export default function TransactionsPage() {
 
               {/* Clear Filters */}
               <div className="flex justify-between items-center pt-2">
-                <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="text-xs text-blue-600 hover:text-blue-700"
+                >
                   Clear All Filters
                 </Button>
                 <span className="text-xs text-gray-500">
@@ -388,89 +400,160 @@ export default function TransactionsPage() {
             </CardContent>
           </Card>
 
-          {/* Transactions List */}
-          <Card>
-            <CardHeader>
+          {/* Ultra Modern Transactions List */}
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50">
+            <CardHeader className="pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Receipt className="h-5 w-5" />
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <Receipt className="h-4 w-4 text-white" />
+                </div>
                 Transactions
               </CardTitle>
             </CardHeader>
             <CardContent>
               {filteredTransactions.length === 0 ? (
-                <div className="text-center py-8">
-                  <Receipt className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-500">No transactions found</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                <div className="text-center py-12">
+                  <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Receipt className="h-10 w-10 text-gray-400" />
+                  </div>
+                  <p className="text-gray-600 font-semibold text-lg">No transactions found</p>
+                  <p className="text-sm text-gray-400 mt-2 mb-6">
                     {transactions.length === 0
                       ? "Start by adding your first transaction"
                       : "Try adjusting your filters"}
                   </p>
                   {transactions.length === 0 && (
-                    <Link href="/transactions/add" className="mt-4 inline-block">
-                      <Button size="sm">
-                        <Plus className="h-4 w-4 mr-1" />
+                    <Link href="/transactions/add">
+                      <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
+                        <Plus className="h-4 w-4 mr-2" />
                         Add Transaction
                       </Button>
                     </Link>
                   )}
                 </div>
               ) : (
-                <div className="space-y-3">
-                  {filteredTransactions.map((transaction) => (
+                <div className="space-y-4">
+                  {filteredTransactions.map((transaction, index) => (
                     <div
                       key={transaction.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                      className="group relative overflow-hidden bg-white rounded-2xl border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                      style={{
+                        animationDelay: `${index * 50}ms`,
+                      }}
                     >
-                      <div className="flex items-center gap-3 flex-1">
-                        <div
-                          className={`p-2 rounded-full ${
-                            transaction.type === "borrow" ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"
-                          }`}
-                        >
-                          {transaction.type === "borrow" ? <Plus className="h-4 w-4" /> : <Minus className="h-4 w-4" />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Link
-                              href={`/shops/${transaction.shop_id}`}
-                              className="font-medium text-gray-900 hover:text-blue-600 transition-colors truncate"
+                      {/* Gradient Background Overlay */}
+                      <div
+                        className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 ${
+                          transaction.type === "borrow"
+                            ? "bg-gradient-to-br from-red-500 to-pink-500"
+                            : "bg-gradient-to-br from-green-500 to-emerald-500"
+                        }`}
+                      />
+
+                      {/* Top Status Bar */}
+                      <div
+                        className={`h-1 w-full ${
+                          transaction.type === "borrow"
+                            ? "bg-gradient-to-r from-red-400 via-red-500 to-red-600"
+                            : "bg-gradient-to-r from-green-400 via-green-500 to-green-600"
+                        }`}
+                      />
+
+                      <div className="p-4">
+                        {/* Header Row */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            {/* Transaction Icon */}
+                            <div
+                              className={`relative w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${
+                                transaction.type === "borrow"
+                                  ? "bg-gradient-to-br from-red-500 to-red-600"
+                                  : "bg-gradient-to-br from-green-500 to-green-600"
+                              }`}
                             >
-                              {transaction.shop_name}
-                            </Link>
-                            <Badge
-                              variant={transaction.type === "borrow" ? "destructive" : "default"}
-                              className="text-xs flex-shrink-0"
-                            >
-                              {transaction.type === "borrow" ? "Borrowed" : "Payment"}
-                            </Badge>
+                              {transaction.type === "borrow" ? (
+                                <Plus className="h-5 w-5 text-white" />
+                              ) : (
+                                <Minus className="h-5 w-5 text-white" />
+                              )}
+                              {/* Pulse effect */}
+                              <div
+                                className={`absolute inset-0 rounded-xl animate-pulse opacity-20 ${
+                                  transaction.type === "borrow" ? "bg-red-400" : "bg-green-400"
+                                }`}
+                              />
+                            </div>
+
+                            {/* Shop Info */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <Link
+                                  href={`/shops/${transaction.shop_id}`}
+                                  className="font-bold text-gray-900 hover:text-blue-600 transition-colors truncate text-lg group-hover:text-blue-600"
+                                  title={transaction.shop_name}
+                                >
+                                  {transaction.shop_name}
+                                </Link>
+                                <Badge
+                                  className={`text-xs font-semibold px-2 py-1 rounded-full border-0 ${
+                                    transaction.type === "borrow"
+                                      ? "bg-gradient-to-r from-red-100 to-red-200 text-red-700"
+                                      : "bg-gradient-to-r from-green-100 to-green-200 text-green-700"
+                                  }`}
+                                >
+                                  {transaction.type === "borrow" ? "BORROWED" : "PAID"}
+                                </Badge>
+                              </div>
+
+                              {/* Date Row */}
+                              <div className="flex items-center gap-3 text-xs text-gray-500">
+                                <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+                                  <Calendar className="h-3 w-3" />
+                                  {new Date(transaction.transaction_date).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </span>
+                                <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+                                  <Clock className="h-3 w-3" />
+                                  {new Date(transaction.created_at).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                          {transaction.description && (
-                            <p className="text-sm text-gray-600 truncate">{transaction.description}</p>
-                          )}
-                          <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {new Date(transaction.transaction_date).toLocaleDateString()}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {new Date(transaction.created_at).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </span>
+
+                          {/* Amount - Prominent Display */}
+                          <div className="text-right flex-shrink-0 ml-3">
+                            <div
+                              className={`text-2xl font-black ${
+                                transaction.type === "borrow" ? "text-red-600" : "text-green-600"
+                              }`}
+                            >
+                              {transaction.type === "borrow" ? "+" : "-"}₹
+                              {Number(transaction.amount).toLocaleString("en-IN")}
+                            </div>
+                            <div className="text-xs text-gray-500 font-medium mt-1">
+                              {transaction.type === "borrow" ? "BORROWED" : "PAYMENT"}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p
-                          className={`text-lg font-bold ${
-                            transaction.type === "borrow" ? "text-red-600" : "text-green-600"
-                          }`}
-                        >
-                          {transaction.type === "borrow" ? "+" : "-"}₹{Number(transaction.amount).toFixed(2)}
-                        </p>
+
+                        {/* Description */}
+                        {transaction.description && (
+                          <div className="mt-3 pt-3 border-t border-gray-100">
+                            <p className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 italic">
+                              "{transaction.description}"
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Action Indicator */}
+                        <div className="absolute top-4 right-4">
+                          <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-200" />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -479,17 +562,19 @@ export default function TransactionsPage() {
             </CardContent>
           </Card>
 
-          {/* Summary by Shop */}
+          {/* Enhanced Summary by Shop */}
           {filteredTransactions.length > 0 && (
-            <Card>
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <Store className="h-5 w-5" />
-                  Summary by Shop
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                    <Store className="h-4 w-4 text-white" />
+                  </div>
+                  Shop Summary
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {shops
                     .map((shop) => {
                       const shopTransactions = filteredTransactions.filter((t) => t.shop_id === shop.id)
@@ -504,23 +589,77 @@ export default function TransactionsPage() {
                       const balance = borrowed - paid
 
                       return (
-                        <div key={shop.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div>
-                            <Link
-                              href={`/shops/${shop.id}`}
-                              className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
-                            >
-                              {shop.name}
-                            </Link>
-                            <p className="text-xs text-gray-600">{shopTransactions.length} transactions</p>
-                          </div>
-                          <div className="text-right">
-                            <p className={`font-bold ${balance > 0 ? "text-red-600" : "text-green-600"}`}>
-                              ₹{Math.abs(balance).toFixed(2)}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {balance > 0 ? "You owe" : balance < 0 ? "They owe" : "Settled"}
-                            </p>
+                        <div
+                          key={shop.id}
+                          className="group relative overflow-hidden bg-white rounded-2xl border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                          {/* Gradient Background */}
+                          <div
+                            className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 ${
+                              balance > 0
+                                ? "bg-gradient-to-br from-red-500 to-pink-500"
+                                : balance < 0
+                                  ? "bg-gradient-to-br from-green-500 to-emerald-500"
+                                  : "bg-gradient-to-br from-blue-500 to-purple-500"
+                            }`}
+                          />
+
+                          <div className="p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4 flex-1 min-w-0">
+                                {/* Shop Icon */}
+                                <div
+                                  className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                                    balance > 0
+                                      ? "bg-gradient-to-br from-red-500 to-red-600"
+                                      : balance < 0
+                                        ? "bg-gradient-to-br from-green-500 to-green-600"
+                                        : "bg-gradient-to-br from-blue-500 to-blue-600"
+                                  }`}
+                                >
+                                  <Store className="h-6 w-6 text-white" />
+                                </div>
+
+                                {/* Shop Details */}
+                                <div className="flex-1 min-w-0">
+                                  <Link
+                                    href={`/shops/${shop.id}`}
+                                    className="font-bold text-lg text-gray-900 hover:text-blue-600 transition-colors block truncate group-hover:text-blue-600"
+                                    title={shop.name}
+                                  >
+                                    {shop.name}
+                                  </Link>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full font-medium">
+                                      {shopTransactions.length} transactions
+                                    </span>
+                                    <span
+                                      className={`text-xs font-bold px-2 py-1 rounded-full ${
+                                        balance > 0
+                                          ? "bg-red-100 text-red-700"
+                                          : balance < 0
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-blue-100 text-blue-700"
+                                      }`}
+                                    >
+                                      {balance > 0 ? "YOU OWE" : balance < 0 ? "THEY OWE" : "SETTLED"}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Balance Amount */}
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div
+                                  className={`text-2xl font-black ${
+                                    balance > 0 ? "text-red-600" : balance < 0 ? "text-green-600" : "text-blue-600"
+                                  }`}
+                                >
+                                  ₹{Math.abs(balance).toLocaleString("en-IN")}
+                                </div>
+                                <div className="text-xs text-gray-500 font-medium mt-1">BALANCE</div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       )
