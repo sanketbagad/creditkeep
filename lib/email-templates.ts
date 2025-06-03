@@ -160,10 +160,10 @@ export const getPasswordResetSuccessEmailHtml = (userName: string) => {
           
           <p>If you did not make this change, please contact our support team immediately.</p>
           
-          <p>Thank you,<br>The Modern Borrowing App Team</p>
+          <p>Thank you,<br>The CreditKeep Team</p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Modern Borrowing App. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} CreditKeep. All rights reserved.</p>
           <p>This is an automated message, please do not reply to this email.</p>
         </div>
       </div>
@@ -247,7 +247,7 @@ export const getOTPEmailHtml = (otp: string, userName: string) => {
         </div>
         <div class="content">
           <p>Hello ${userName},</p>
-          <p>Welcome to Modern Borrowing App! To complete your registration, please verify your email address using the OTP code below:</p>
+          <p>Welcome to CreditKeep! To complete your registration, please verify your email address using the OTP code below:</p>
           
           <div class="otp-code">${otp}</div>
           
