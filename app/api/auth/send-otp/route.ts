@@ -61,14 +61,20 @@ export async function POST(request: NextRequest) {
     })
 
     // Send OTP email
-    try {
-      await resend.emails.send({
+   try {
+      const { data, error } = await resend.emails.send({
         from: "hello@botbyte.in",
         to: [email],
         subject: "Verify your email - CreditKeep",
         html: getOTPEmailHtml(otp, name),
       })
 
+      if (error) {
+        console.error("Resend API error:", error)
+        return NextResponse.json({ error: "Failed to send verification email" }, { status: 500 })
+      }
+
+      console.log("Resend API response:", data)
       console.log(`OTP sent to ${email}: ${otp}`) // For development - remove in production
 
       return NextResponse.json({
