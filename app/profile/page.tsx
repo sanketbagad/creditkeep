@@ -189,9 +189,9 @@ export default function ProfilePage() {
             <CardContent>
               <div className="space-y-2 text-sm text-gray-600">
                 <p>
-                  <strong>CreditKeep</strong>
+                  <strong>CreditKeep By Botbyte AI</strong>
                 </p>
-                <p>Version 1.1.5</p>
+                <p>Version 2.1.5</p>
                 <p>Keep track of your daily borrowings and payments</p>
               </div>
             </CardContent>
