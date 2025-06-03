@@ -5,7 +5,7 @@ import { AppLayout } from "@/components/app-layout"
 import { Navbar } from "@/components/navbar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowUpRight, ArrowDownRight, Store, Receipt, Plus } from "lucide-react"
+import { ArrowUpRight, ArrowDownRight, Store, Receipt, Plus, Search } from "lucide-react"
 import Link from "next/link"
 
 interface Shop {
@@ -145,6 +145,8 @@ export default function DashboardPage() {
               </Card>
             </Link>
           </div>
+
+          {/* Add new section for Shop Owner Tools */}
 
           {/* Recent Transactions */}
           <Card>

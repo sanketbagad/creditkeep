@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, Store, User, Receipt, HandCoins, CreditCard } from "lucide-react"
+import { Home, Store, User, Receipt, HandCoins, CreditCard, Currency } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
@@ -10,6 +10,7 @@ const navItems = [
   { href: "/shops", icon: Store, label: "Shops" },
   { href: "/transactions", icon: Receipt, label: "Transactions" },
   { href: "/lending", icon: HandCoins, label: "Lending" },
+  { href: "/my-customers", icon: Currency, label: "Customers" },
   { href: "/borrower-lookup", icon: CreditCard, label: "Borrow" },
   { href: "/profile", icon: User, label: "Profile" },
 ]
