@@ -162,7 +162,11 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={
+              () => {
+                router.push("/help") 
+              }
+            }>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <HelpCircle className="h-5 w-5 text-gray-600" />

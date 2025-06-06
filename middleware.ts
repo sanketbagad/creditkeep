@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
     "/reset-password",
     "/verify-otp",
     "/borrower-lookup",
+    "/help"
   ]
   const isPublicPath = publicPaths.includes(pathname)
 
